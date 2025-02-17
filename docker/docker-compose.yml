@@ -1,0 +1,26 @@
+# docker-compose.yml
+# Use root/example as user/password credentials
+# openssl req -new -x509 -nodes -out server.crt -keyout server.key
+
+# 如果报权限问题, 先 copy 前的文件权限是正确的
+# sudo chown 999:999 ./server.key
+# sudo chmod 600 ./server.key
+
+version: '3.8'
+
+services:
+    postgresql:
+        image: postgres:latest
+        container_name: postgresql
+        environment:
+            POSTGRES_DB: dasheng
+            POSTGRES_USER: 'root'
+            POSTGRES_PASSWORD: 'asd123456'
+            VOLUME_BASE: /var/lib/docker/volumes/PostgreSQL
+        ports:
+            - 5432:5432
+        volumes:
+            - '/var/lib/docker/volumes/PostgreSQL/data:/var/lib/postgresql/data'
+            - '/var/lib/docker/volumes/PostgreSQL/ssl:/etc/ssl'
+        # 启用 SSL
+        command: postgres -c ssl=on -c ssl_cert_file=/etc/ssl/server.crt -c ssl_key_file=/etc/ssl/server.key
