@@ -56,32 +56,35 @@ jobs:
                   host: ${{ secrets.REMOTE_HOST }}
                   username: ${{ secrets.REMOTE_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: '22'
                   script: |
                       sudo systemctl restart nginx
 
-    # update-and-restart:
-    #     name: 更新并重启server
-    #     runs-on: ubuntu-latest
-    #     environment:
-    #         name: dev
-    #     steps:
-    #         - name: Update and Restart Application
-    #           uses: appleboy/ssh-action@master
-    #           with:
-    #               host: ${{ secrets.REMOTE_HOST }}
-    #               username: ${{ secrets.REMOTE_USER }}
-    #               key: ${{ secrets.SSH_PRIVATE_KEY }}
-    #               port: '22'
-    #               script: |
-    #                   cd /var/asd/www/dev/vue3-admin/
-    #                   export PATH=$PATH:/root/.nvm/versions/node/v22.14.0/bin/pnpm
-    #                   export PATH=$PATH:/root/.nvm/versions/node/v22.14.0/bin/pm2
-    #                   pm2 stop ecosystem.config.js
-    #                   git fetch
-    #                   git reset --hard origin/main
-    #                   git pull
-    #                   pnpm -v
-    #                   pm2 -v
-    #                   pnpm i
-    #                   pnpm build
-    #                   pm2 start ecosystem.config.js
+    update-and-restart:
+        name: 更新并重启server
+        runs-on: ubuntu-latest
+        environment:
+            name: dev
+        steps:
+            - name: Update and Restart Application
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.REMOTE_HOST }}
+                  username: ${{ secrets.REMOTE_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: '22'
+                  script: |
+                      # 加载 nvm 和 node 环境
+                      export NVM_DIR="$HOME/.nvm"
+                      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+                      nvm use default  # 使用默认版本的 Node.js
+                      echo "pnpm version: $(pnpm -v)"
+                      echo "pm2 version: `pm2 -v`"
+                      cd /var/asd/www/dev/vue3-admin/server
+                      pm2 stop ecosystem.config.js
+                      git fetch
+                      git reset --hard origin/main
+                      git pull
+                      pnpm i
+                      pnpm build
+                      pm2 start ecosystem.config.js
