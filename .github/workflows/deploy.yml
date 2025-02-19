@@ -78,6 +78,8 @@ jobs:
                       export PATH=$PATH:/root/.nvm/versions/node/v22.14.0/bin/pnpm
                       export PATH=$PATH:/root/.nvm/versions/node/v22.14.0/bin/pm2
                       pm2 stop ecosystem.config.js
+                      git fetch
+                      git reset --hard origin/main
                       git pull
                       pnpm -v
                       pm2 -v
