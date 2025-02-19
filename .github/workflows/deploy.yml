@@ -1,0 +1,86 @@
+name: Deploy Workflow
+
+on:
+    push:
+        branches:
+            - main # 或者您想要触发部署的分支
+
+jobs:
+    build-and-deploy-web:
+        name: 编译部署web
+        runs-on: ubuntu-latest
+        environment:
+            name: dev
+        strategy:
+            matrix:
+                node-version: [18.x, 20.x, 22.x]
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 1 # 最后一次提交
+                  lfs: true # Large File Storage 支持处理大文件
+
+            - name: Checkout LFS objects # 检出使用 Git LFS 管理的大文件
+              run: git lfs checkout
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }} # 根据您的项目设置Node.js版本
+                  cache: 'npm'
+
+            - name: Install dependencies and build
+              run: |
+                  cd /web
+                  npm install -g pnpm
+                  pnpm install
+                  pnpm run build
+              env:
+                  CI: false
+
+            - name: Deploy to Server
+              uses: easingthemes/ssh-deploy@v2.1.5
+              with:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  ARGS: '-avz --delete'
+                  SOURCE: 'dist/' # 假设构建输出在dist目录
+                  TARGET: '/var/www/vue3-admin/'
+                  HOST: ${{ secrets.REMOTE_HOST }}
+                  USERNAME: ${{ secrets.REMOTE_USER }}
+                  PORT: '22'
+
+            - name: Restart Nginx
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.REMOTE_HOST }}
+                  username: ${{ secrets.REMOTE_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: '22'
+                  script: |
+                      sudo systemctl restart nginx
+
+    update-and-restart:
+        name: 更新并重启server
+        runs-on: ubuntu-latest
+        environment:
+            name: dev
+        steps:
+            - name: Update and Restart Application
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.REMOTE_HOST }}
+                  username: ${{ secrets.REMOTE_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: '22'
+                  script: |
+                      cd /var/asd/www/dev/vue3-admin/
+                      export PATH=$PATH:/root/.nvm/versions/node/v22.14.0/bin/pnpm
+                      export PATH=$PATH:/root/.nvm/versions/node/v22.14.0/bin/pm2
+                      pm2 stop ecosystem.config.js
+                      git pull
+                      pnpm -v
+                      pm2 -v
+                      pnpm i
+                      pnpm build
+                      pm2 start ecosystem.config.js

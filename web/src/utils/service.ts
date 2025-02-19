@@ -4,7 +4,7 @@
  * @param env The current env
  */
 export function createServiceConfig(env: Env.ImportMeta) {
-  const { VITE_SERVICE_BASE_URL, VITE_OTHER_SERVICE_BASE_URL } = env;
+  const { /* VITE_SERVICE_BASE_URL, */ VITE_OTHER_SERVICE_BASE_URL } = env;
 
   let other = {} as Record<App.Service.OtherBaseURLKey, string>;
   try {
@@ -15,8 +15,9 @@ export function createServiceConfig(env: Env.ImportMeta) {
   }
 
   const httpConfig: App.Service.SimpleServiceConfig = {
-    baseURL: VITE_SERVICE_BASE_URL,
-    other
+    // baseURL: VITE_SERVICE_BASE_URL,
+    baseURL: `${window.location.origin}/api`,
+    other,
   };
 
   const otherHttpKeys = Object.keys(httpConfig.other) as App.Service.OtherBaseURLKey[];
@@ -25,14 +26,14 @@ export function createServiceConfig(env: Env.ImportMeta) {
     return {
       key,
       baseURL: httpConfig.other[key],
-      proxyPattern: createProxyPattern(key)
+      proxyPattern: createProxyPattern(key),
     };
   });
 
   const config: App.Service.ServiceConfig = {
     baseURL: httpConfig.baseURL,
     proxyPattern: createProxyPattern(),
-    other: otherConfig
+    other: otherConfig,
   };
 
   return config;
@@ -55,7 +56,7 @@ export function getServiceBaseURL(env: Env.ImportMeta, isProxy: boolean) {
 
   return {
     baseURL: isProxy ? createProxyPattern() : baseURL,
-    otherBaseURL
+    otherBaseURL,
   };
 }
 

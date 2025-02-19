@@ -113,6 +113,7 @@
     "eslint-plugin-vue": "9.27.0",
     "lint-staged": "15.2.7",
     "prettier": "^3.3.3",
+    "rimraf": "5.0.8",
     "rollup-plugin-copy": "^3.5.0",
     "sass": "1.77.6",
     "tsx": "4.16.2",
@@ -129,5 +130,27 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "website": "https://vue3.baiwumm.com"
+  "website": "https://vue3.baiwumm.com",
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@vue-office/docx",
+      "@vue-office/excel",
+      "@vue-office/pdf",
+      "core-js",
+      "es5-ext",
+      "esbuild",
+      "sharp",
+      "vue-demi"
+    ],
+    "onlyBuiltDependencies": [
+      "@vue-office/docx",
+      "@vue-office/excel",
+      "@vue-office/pdf",
+      "core-js",
+      "es5-ext",
+      "esbuild",
+      "sharp",
+      "vue-demi"
+    ]
+  }
 }
