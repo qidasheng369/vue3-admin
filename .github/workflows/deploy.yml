@@ -46,7 +46,7 @@ jobs:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   ARGS: '-avz --delete'
                   SOURCE: 'web/dist' # 假设构建输出在dist目录
-                  TARGET: '/var/www/vue3-admin/'
+                  TARGET: '/var/asd/www/dev/web/vue3-admin/'
                   REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
                   REMOTE_USER: ${{ secrets.REMOTE_USER }}
 
@@ -57,8 +57,9 @@ jobs:
                   username: ${{ secrets.REMOTE_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   port: '22'
+                  # sudo systemctl restart nginx
                   script: |
-                      sudo systemctl restart nginx
+                      nginx -s reload
 
     update-and-restart:
         name: 更新并重启server
@@ -80,7 +81,7 @@ jobs:
                       nvm use default  # 使用默认版本的 Node.js
                       echo "pnpm version: $(pnpm -v)"
                       echo "pm2 version: `pm2 -v`"
-                      cd /var/asd/www/dev/vue3-admin/server
+                      cd /var/asd/www/dev/server/vue3-admin/server
                       pm2 stop ecosystem.config.js
                       git fetch
                       git reset --hard origin/main
