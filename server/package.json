@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "author": {
-    "name": "baiwumm",
-    "email": "baiwumm@foxmail.com",
-    "url": "https://baiwumm.com"
+    "name": "dasheng",
+    "email": "xworker@foxmail.com",
+    "url": "https://xworker.icu"
   },
   "private": true,
   "license": "UNLICENSED",
@@ -99,5 +99,14 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@prisma/engines",
+      "bcrypt",
+      "prisma"
+    ]
   }
 }

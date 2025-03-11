@@ -18,7 +18,7 @@ const fetchJuejinList = async (cursor = '0') => {
   loading.value = true;
   const { data, error } = await getJuejinList({
     sort_type: 2,
-    user_id: '1917147257534279',
+    user_id: '984795790719005',
     cursor,
   });
   if (!error) {

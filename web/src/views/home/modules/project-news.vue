@@ -26,7 +26,7 @@ const commitList = ref<Commit[]>([]);
 // 请求 github 日志
 const fetchGithubLog = async () => {
   loading.value = true;
-  const response = await fetch('https://api.github.com/repos/baiwumm/Vue3-Admin/commits?page=1&per_page=10');
+  const response = await fetch('https://api.github.com/repos/qidasheng369/Vue3-Admin/commits?page=1&per_page=10');
   if (response.status === 200) {
     commitList.value = await response.json();
   }

@@ -4,17 +4,17 @@
   "version": "1.2.8",
   "description": "A fresh and elegant admin template, based on Vue3,Vite3,TypeScript,AntDesign and UnoCSS.",
   "author": {
-    "name": "baiwumm",
-    "email": "baiwumm@foxmail.com",
-    "url": "https://baiwumm.com"
+    "name": "dasheng",
+    "email": "xworker@foxmail.com",
+    "url": "https://xworker.icu"
   },
   "license": "MIT",
-  "homepage": "https://github.com/baiwumm/vue3-admin",
+  "homepage": "https://github.com/qidasheng369/vue3-admin",
   "repository": {
-    "url": "https://github.com/baiwumm/vue3-admin.git"
+    "url": "https://github.com/qidasheng369/vue3-admin.git"
   },
   "bugs": {
-    "url": "https://github.com/baiwumm/vue3-admin/issues"
+    "url": "https://github.com/qidasheng369/vue3-admin/issues"
   },
   "keywords": [
     "Vue3 admin ",
@@ -130,7 +130,7 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "website": "https://vue3.baiwumm.com",
+  "website": "https://vue3-admin.xworker.icu",
   "pnpm": {
     "ignoredBuiltDependencies": [
       "@vue-office/docx",

@@ -1,8 +1,8 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:57:44
- * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-26 17:54:09
+ * @LastEditors: 齐大胜 782395122@qq.com
+ * @LastEditTime: 2025-03-11 14:11:45
  * @Description: 保存用户数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -64,7 +64,7 @@ export class SaveUserDto {
   @ApiProperty({
     type: String,
     description: '中文名',
-    default: '谢明伟',
+    default: '齐大胜',
   })
   @IsNotEmpty({ message: '中文名必填' })
   cnName: string;
@@ -72,7 +72,7 @@ export class SaveUserDto {
   @ApiProperty({
     type: String,
     description: '电子邮箱',
-    default: 'baiwumm@foxmail.com',
+    default: 'xworker@foxmail.com',
   })
   @IsEmail({}, { message: '电子邮箱格式不正确' })
   email: string;

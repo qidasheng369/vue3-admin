@@ -4,7 +4,7 @@
  * @param env The current env
  */
 export function createServiceConfig(env: Env.ImportMeta) {
-  const { /* VITE_SERVICE_BASE_URL, */ VITE_OTHER_SERVICE_BASE_URL } = env;
+  const { VITE_ENV, VITE_SERVICE_BASE_URL, VITE_OTHER_SERVICE_BASE_URL } = env;
 
   let other = {} as Record<App.Service.OtherBaseURLKey, string>;
   try {
@@ -14,9 +14,11 @@ export function createServiceConfig(env: Env.ImportMeta) {
     console.error('VITE_OTHER_SERVICE_BASE_URL is not a valid JSON string');
   }
 
+  // 根据环境区分
+  const baseURL = VITE_ENV === 'prod' ? `${window.location.origin}/api` : VITE_SERVICE_BASE_URL;
   const httpConfig: App.Service.SimpleServiceConfig = {
-    // baseURL: VITE_SERVICE_BASE_URL,
-    baseURL: `${window.location.origin}/api`,
+    baseURL,
+    // baseURL: `${window.location.origin}/api`,
     other,
   };
 

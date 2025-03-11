@@ -8,6 +8,7 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 import type { User } from '@prisma/client';
+
 import { ResponseDto } from '@/dto/response.dto';
 
 /**
@@ -23,9 +24,9 @@ export class ResponseUserDto extends ResponseDto {
           id: 'dddd7ba9-c1d4-4a6b-b946-f05e2f79880f',
           userName: 'Admin',
           password: '$2b$10$e1RRf...EUn3Ckujm5JKGeTUduc/OaeDKOu.6DZUzIsm36xuXpv.q',
-          cnName: '谢明伟',
-          email: 'baiwumm@foxmail.com',
-          phone: '15920157932',
+          cnName: '齐大胜',
+          email: 'xworker@foxmail.com',
+          phone: '15291197259',
           avatar: 'http://localhost:3000/static/image/2024-07/cc9e77ee-cf84-48e8-a9d0-dc3e9d21224c.jpeg',
           sex: 'MALE',
           status: 'ACTIVE',
@@ -59,9 +60,9 @@ export class ResponseSaveUserDto extends ResponseDto {
       id: 'dddd7ba9-c1d4-4a6b-b946-f05e2f79880f',
       userName: 'Admin',
       password: '$2b$10$e1RRf...EUn3Ckujm5JKGeTUduc/OaeDKOu.6DZUzIsm36xuXpv.q',
-      cnName: '谢明伟',
-      email: 'baiwumm@foxmail.com',
-      phone: '15920157932',
+      cnName: '齐大胜',
+      email: 'xworker@foxmail.com',
+      phone: '15291197259',
       avatar: 'http://localhost:3000/static/image/2024-07/cc9e77ee-cf84-48e8-a9d0-dc3e9d21224c.jpeg',
       sex: 'MALE',
       status: 'ACTIVE',
